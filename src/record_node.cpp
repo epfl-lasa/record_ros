@@ -1,10 +1,10 @@
-#include <ros/ros.h>
 #include "record_ros/record.h"
-#include <boost/program_options.hpp>
+
+#include <ros/ros.h>
+#include <boost/regex.hpp>
+#include <boost/filesystem.hpp>
 #include <iostream>
 #include <memory>
-#include <regex>
-#include <boost/filesystem.hpp>
 
 namespace po = boost::program_options;
 

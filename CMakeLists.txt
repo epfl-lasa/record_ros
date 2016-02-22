@@ -48,7 +48,7 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} boost_program_options)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} regex)
 
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp ${PROJECT_NAME}_generate_messages_cpp)
