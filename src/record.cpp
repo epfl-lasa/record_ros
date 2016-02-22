@@ -3,7 +3,7 @@
 #include <boost/thread.hpp>
 
 Record::Record(ros::NodeHandle &nh,rosbag::RecorderOptions const& options):
-rosbag::Recorder(options)
+    rosbag::Recorder(options)
 {
     service_srv = nh.advertiseService("cmd",&Record::string_command,this);
     b_record    = false;
@@ -21,15 +21,18 @@ void Record::wait_for_callback(){
 
 bool Record::string_command(record_ros::String_cmd::Request& req, record_ros::String_cmd::Response& res){
     std::string cmd = req.cmd;
+    ROS_INFO("Record callback");
     if(cmd == "record"){
-       // thread = boost::thread(&rosbag::Recorder::run,recorder.get());
-        b_record = true;
-       // thread.detach();
-        res.res     = "starting recorder";
+        if(b_record){
+            ros::shutdown();
+            res.res = "stopping recorder";
+        }else{
+            b_record = true;
+            res.res  = "starting recorder";
+        }
         return true;
     }else if(cmd == "stop"){
         ros::shutdown();
-    //    thread.join();
         res.res = "stopping recorder";
         return true;
     }else{
