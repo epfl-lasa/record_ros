@@ -3,10 +3,6 @@
 #include <ros/ros.h>
 #include <boost/regex.hpp>
 #include <boost/filesystem.hpp>
-#include <iostream>
-#include <memory>
-
-namespace po = boost::program_options;
 
 int main(int argc, char** argv)
 {
@@ -42,9 +38,9 @@ int main(int argc, char** argv)
     ROS_INFO_STREAM("file_name: "   << file_name);
 
     // Extract all topics white space seperated
-    std::regex rgx("\\s+");
-    std::sregex_token_iterator iter(topic.begin(), topic.end(),rgx,-1);
-    std::sregex_token_iterator end;
+    boost::regex rgx("\\s+");
+    boost::sregex_token_iterator iter(topic.begin(), topic.end(),rgx,-1);
+    boost::sregex_token_iterator end;
     std::vector<std::string> topics;
     for ( ; iter != end; ++iter){
         topics.push_back(*iter);

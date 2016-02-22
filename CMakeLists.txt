@@ -5,7 +5,7 @@ project(record_ros)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED roscpp message_generation rosbag std_msgs)
-find_package(Boost)
+find_package(Boost REQUIRED COMPONENTS regex )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -O3 -std=c++11 -mtune=native -fPIC -Wall")        ## Optimize
 
@@ -42,13 +42,14 @@ set(SRC_FILES  ${SRC_DIR}/record.cpp
 )
 
 include_directories(
-  ${catkin_INCLUDE_DIRS}
-  ${INCLUDE_DIR}
-  ${INCLUDE_STATS}
+    ${catkin_INCLUDE_DIRS}
+    ${INCLUDE_DIR}
+    ${INCLUDE_STATS}
+    ${Boost_INCLUDE_DIRS}
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} regex)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_REGEX_LIBRARY})
 
 
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp ${PROJECT_NAME}_generate_messages_cpp)
