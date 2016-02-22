@@ -6,30 +6,16 @@ Record::Record(ros::NodeHandle &nh,rosbag::RecorderOptions const& options):
 rosbag::Recorder(options)
 {
     service_srv = nh.advertiseService("cmd",&Record::string_command,this);
-    topic_cmd   = nh.subscribe("cmd",1,&Record::string_command2,this);
     b_record    = false;
 
 }
 
-/*
-void Record::init(rosbag::RecorderOptions options){
-    recorder.reset( new rosbag::Recorder(options) );
-}
-*//*
-std::string Record::get_time_stamp(){
-    time_t rawtime;
-    struct tm * timeinfo;
-    char buffer[80];
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-    strftime(buffer,80,"_%Hh%Ms%S_%d-%m-%y_",timeinfo);
-    return std::string(buffer);
-}
-*/
-void Record::string_command2(const std_msgs::String::ConstPtr& msg){
-    if(msg->data == "record"){
-        //thread = boost::thread(&rosbag::Recorder::run,recorder.get());
-        //thread.detach();
+void Record::wait_for_callback(){
+    ros::Rate r(10); // 10 hz
+    while (!b_record)
+    {
+        ros::spinOnce();
+        r.sleep();
     }
 }
 

@@ -11,10 +11,8 @@ namespace po = boost::program_options;
 int main(int argc, char** argv)
 {
 
-
     ros::init(argc, argv,"");
     ros::NodeHandle nh;
-
 
     std::string topic, path_save, file_name;
     if (!nh.getParam("/record/topic", topic))
@@ -58,17 +56,8 @@ int main(int argc, char** argv)
     options.prefix = path_save + "/" + file_name;
 
     Record* record = new Record(nh,options);
-    ros::Rate r(10); // 10 hz
-    while (!record->b_record)
-    {
-        ros::spinOnce();
-        r.sleep();
-    }
-
+    record->wait_for_callback();
     record->run();
-
- //   thread.interrupt();
-//    thread.join();
 
 
     return 0;
