@@ -19,6 +19,7 @@ public:
      volatile bool b_record;
 
 //    boost::scoped_ptr<rosbag::Recorder> recorder;
+//hello travis
 
 private:
 
