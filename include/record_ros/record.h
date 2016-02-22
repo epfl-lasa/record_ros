@@ -11,9 +11,7 @@ public:
 
     Record(ros::NodeHandle& nh,rosbag::RecorderOptions const& options);
 
-     volatile bool b_record;
-
-     void wait_for_callback();
+    void wait_for_callback();
 
 private:
 
@@ -21,8 +19,10 @@ private:
 
 private:
 
+    bool                        b_record;
     ros::ServiceServer          service_srv;
     ros::Subscriber             topic_cmd;
+
 };
 
 
