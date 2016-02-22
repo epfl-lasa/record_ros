@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="path_save"   default=""/>
+	<arg name="topic"  	default=""/>
+	<arg name="file_name"  	default=""/>
+
+	<group ns="record">
+		<param name="path_save" type="str" value="$(arg path_save)"	/>
+		<param name="topic" 	type="str" value="$(arg topic)"		/>
+		<param name="file_name" type="str" value="$(arg file_name)"	/>
+		<node name="record_ros" pkg="record_ros" type="record_ros" output="screen" respawn="true"/>
+	</group>
+
+</launch>
+

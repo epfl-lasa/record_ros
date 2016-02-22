@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="path_save"  default= "./"/>
+	<node name="record_ros" pkg="record_ros" type="record_ros" args="--path_save $(arg path_save)" output="screen"/>
+
+
+</launch>
+
