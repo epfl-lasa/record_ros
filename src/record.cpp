@@ -11,7 +11,7 @@ Record::Record(ros::NodeHandle &nh,rosbag::RecorderOptions const& options):
 }
 
 void Record::wait_for_callback(){
-    ros::Rate r(10); // 10 hz
+    ros::Rate r(100); // 60 hz
     while (!b_record)
     {
         ros::spinOnce();

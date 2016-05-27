@@ -52,7 +52,9 @@ int main(int argc, char** argv)
     options.prefix = path_save + "/" + file_name;
 
     Record* record = new Record(nh,options);
+    //ROS_INFO_STREAM("RECORD_NODE: Waiting for callback()!");
     record->wait_for_callback();
+    //ROS_INFO_STREAM("RECORD_NODE: START!");
     record->run();
 
 
