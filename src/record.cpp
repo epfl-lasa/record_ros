@@ -2,13 +2,20 @@
 #include <ros/ros.h>
 #include <boost/thread.hpp>
 
+
+
+static void cb_shutdown(const ros::TimerEvent&){
+  ros::shutdown();
+}
+
 Record::Record(ros::NodeHandle &nh,rosbag::RecorderOptions const& options):
     rosbag::Recorder(options)
 {
     service_srv = nh.advertiseService("cmd",&Record::string_command,this);
     b_record    = false;
-
+    shutdown_timer = nh.createTimer(ros::Duration(0.1), cb_shutdown,true,false);
 }
+
 
 void Record::wait_for_callback(){
     ros::Rate r(100); // 60 hz
@@ -24,7 +31,7 @@ bool Record::string_command(record_ros::String_cmd::Request& req, record_ros::St
     ROS_INFO("Record callback");
     if(cmd == "record"){
         if(b_record){
-            ros::shutdown();
+            shutdown_timer.start();
             res.res = "stopping recorder";
         }else{
             b_record = true;
@@ -32,7 +39,7 @@ bool Record::string_command(record_ros::String_cmd::Request& req, record_ros::St
         }
         return true;
     }else if(cmd == "stop"){
-        ros::shutdown();
+        shutdown_timer.start();
         res.res = "stopping recorder";
         return true;
     }else{

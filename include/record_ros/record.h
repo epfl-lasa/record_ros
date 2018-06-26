@@ -8,9 +8,7 @@
 class Record : public rosbag::Recorder{
 
 public:
-
     Record(ros::NodeHandle& nh,rosbag::RecorderOptions const& options);
-
     void wait_for_callback();
 
 private:
@@ -22,7 +20,7 @@ private:
     bool                        b_record;
     ros::ServiceServer          service_srv;
     ros::Subscriber             topic_cmd;
-
+    ros::Timer                  shutdown_timer;
 };
 
 
